@@ -1,0 +1,103 @@
+<mat-toolbar color="primary"></mat-toolbar>
+<pip-shadow visible="true" attachmentSide="top"></pip-shadow>
+<pip-document-layout toolbar="true">
+  <pip-document-content *ngIf="(state$ | async) === 'progress'">
+    <pip-empty-state>
+      <pip-empty-state-title [text]="'DATAPROFILES_LOADING' | translate" imageUrl="./assets/progress.svg"></pip-empty-state-title>
+      <div class="pip-progress">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </pip-empty-state>
+  </pip-document-content>
+  <pip-document-content *ngIf="(state$ | async) === 'data' || (state$ | async) === 'empty'">
+    <div class="pip-document-content-wrapper">
+      <mat-progress-bar mode="indeterminate" *ngIf="loading$ | async" class="pip-loading"></mat-progress-bar>
+      <div class="pip-document-heading">
+        <div class="pip-title">{{ 'DATAPROFILES_TITLE' | translate }}</div>
+        <span class="pip-subtitle">{{ 'DATAPROFILES_DESCRIPTION' | translate }}</span>
+      </div>
+      <mat-tab-group [selectedIndex]="tabIndex" (selectedIndexChange)="onTabChange($event)">
+        <mat-tab #tab_params>
+          <ng-template mat-tab-label>
+            <mat-icon fxHide fxShow.lt-sm fontIcon="webui-submenu"></mat-icon>
+            <span fxHide.lt-sm>{{ 'DATAPROFILES_PARAMS' | translate }}</span>
+          </ng-template>
+          <iqs-type-list *ngIf="dataprofiles?.param_types?.length" [loading]="loading$ | async" [parameters]="dataprofiles?.param_types"
+                         (paramClick)="onTypeEdit($event, TypeDialogType.Parameter)" (removeClick)="onTypeRemove($event, TypeDialogType.Parameter)"></iqs-type-list>
+          <pip-empty-state *ngIf="!dataprofiles?.param_types?.length">
+            <pip-empty-state-title [text]="'DATAPROFILES_PARAMS_EMPTY' | translate" imageUrl="./assets/empty.svg"></pip-empty-state-title>
+            <pip-empty-state-actions [actions]="emptyStateParamsActions"></pip-empty-state-actions>
+          </pip-empty-state>
+        </mat-tab>
+        <mat-tab #tab_events>
+          <ng-template mat-tab-label>
+            <mat-icon fxHide fxShow.lt-sm fontIcon="iqt-events"></mat-icon>
+            <span fxHide.lt-sm>{{ 'DATAPROFILES_EVENTS' | translate }}</span>
+          </ng-template>
+          <iqs-type-list *ngIf="dataprofiles?.event_types?.length" [loading]="loading$ | async" [parameters]="dataprofiles?.event_types"
+                         (paramClick)="onTypeEdit($event, TypeDialogType.Event)" (removeClick)="onTypeRemove($event, TypeDialogType.Event)"></iqs-type-list>
+          <pip-empty-state *ngIf="!dataprofiles?.event_types?.length">
+            <pip-empty-state-title [text]="'DATAPROFILES_EVENTS_EMPTY' | translate" imageUrl="./assets/empty.svg"></pip-empty-state-title>
+            <pip-empty-state-actions [actions]="emptyStateEventsActions"></pip-empty-state-actions>
+          </pip-empty-state>
+        </mat-tab>
+        <mat-tab #tab_commands>
+          <ng-template mat-tab-label>
+            <mat-icon fxHide fxShow.lt-sm fontIcon="iqt-bullhorn"></mat-icon>
+            <span fxHide.lt-sm>{{ 'DATAPROFILES_COMMANDS' | translate }}</span>
+          </ng-template>
+          <iqs-type-list *ngIf="dataprofiles?.command_types?.length" [loading]="loading$ | async" [parameters]="dataprofiles?.command_types"
+                         (paramClick)="onTypeEdit($event, TypeDialogType.Command)" (removeClick)="onTypeRemove($event, TypeDialogType.Command)"></iqs-type-list>
+          <pip-empty-state *ngIf="!dataprofiles?.command_types?.length">
+            <pip-empty-state-title [text]="'DATAPROFILES_COMMANDS_EMPTY' | translate" imageUrl="./assets/empty.svg"></pip-empty-state-title>
+            <pip-empty-state-actions [actions]="emptyStateCommandsActions"></pip-empty-state-actions>
+          </pip-empty-state>
+        </mat-tab>
+        <mat-tab #tab_states>
+          <ng-template mat-tab-label>
+            <mat-icon fxHide fxShow.lt-sm fontIcon="iqt-ping"></mat-icon>
+            <span fxHide.lt-sm>{{ 'DATAPROFILES_STATES' | translate }}</span>
+          </ng-template>
+          <iqs-state-list *ngIf="dataprofiles?.state_types?.length" [loading]="loading$ | async" [states]="dataprofiles?.state_types"
+                          [parameters]="dataprofiles?.param_types" [events]="dataprofiles?.event_types" [commands]="dataprofiles?.command_types"
+                          (stateClick)="onStateEdit($event)" (removeClick)="onStateRemove($event)"></iqs-state-list>
+          <pip-empty-state *ngIf="!dataprofiles?.state_types?.length">
+            <pip-empty-state-title [text]="'DATAPROFILES_STATES_EMPTY' | translate" imageUrl="./assets/empty.svg"></pip-empty-state-title>
+            <pip-empty-state-actions [actions]="emptyStateStatesActions"></pip-empty-state-actions>
+          </pip-empty-state>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </pip-document-content>
+  <pip-document-footer *ngIf="(state$ | async) === 'data' || (state$ | async) === 'empty'">
+    <pip-action-list>
+      <button mat-button class="pip-action-list-item" *ngIf="tabIndex === 0" (click)="onTypeAdd(TypeDialogType.Parameter)"
+              [disabled]="loading$ | async">
+        <mat-icon fontSet="webui" fontIcon="webui-plus"></mat-icon>
+        <span class="pip-title">{{ 'DATAPROFILES_ACTION_PARAMS_ADD' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" *ngIf="tabIndex === 1" (click)="onTypeAdd(TypeDialogType.Event)"
+              [disabled]="loading$ | async">
+        <mat-icon fontSet="webui" fontIcon="webui-plus"></mat-icon>
+        <span class="pip-title">{{ 'DATAPROFILES_ACTION_EVENTS_ADD' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" *ngIf="tabIndex === 2" (click)="onTypeAdd(TypeDialogType.Command)"
+              [disabled]="loading$ | async">
+        <mat-icon fontSet="webui" fontIcon="webui-plus"></mat-icon>
+        <span class="pip-title">{{ 'DATAPROFILES_ACTION_COMMANDS_ADD' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" *ngIf="tabIndex === 3" (click)="onStateAdd()" [disabled]="loading$ | async">
+        <mat-icon fontSet="webui" fontIcon="webui-plus"></mat-icon>
+        <span class="pip-title">{{ 'DATAPROFILES_ACTION_STATES_ADD' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" (click)="onSave()" [disabled]="loading$ | async">
+        <mat-icon fontSet="webui" fontIcon="webui-check"></mat-icon>
+        <span class="pip-title">{{ 'DATAPROFILES_ACTION_SAVE' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" (click)="onReset()" [disabled]="loading$ | async">
+        <mat-icon fontSet="webui" fontIcon="webui-cross"></mat-icon>
+        <span class="pip-title">{{ 'DATAPROFILES_ACTION_RESET' | translate }}</span>
+      </button>
+    </pip-action-list>
+  </pip-document-footer>
+</pip-document-layout>

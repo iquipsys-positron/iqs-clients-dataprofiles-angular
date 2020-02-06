@@ -1,0 +1,29 @@
+<pip-selected (onSelect)="onSelect($event)" [index]="selectedIndex$ | async" [disableSelect]="disableSelected$ | async">
+  <mat-list>
+    <mat-list-item class="pip-selectable pip-selected-item" pipSelectable *ngIf="state === 'create'">
+      <mat-icon matListIcon>add</mat-icon>
+      <div matLine class="pip-title"> {{ 'DEVICEPROFILES_TITLE_CREATE' | translate }} </div>
+      <p matLine class="pip-subtitle">
+        <span>{{ 'DEVICEPROFILES_SUBTITLE_CREATE' | translate }}</span>
+      </p>
+    </mat-list-item>
+    <ng-container *ngIf="state === 'create'">
+      <mat-list-item *ngFor="let profile of profiles; trackBy: trackById">
+        <mat-icon matListIcon [fontIcon]="deviceprofilesHelp.getDeviceProfileIcon(profile)"></mat-icon>
+        <div matLine class="pip-title"> {{ profile?.name }} </div>
+        <p matLine class="pip-subtitle">
+          <span>{{ deviceprofilesHelp.getDeviceProfileSubtitle(profile) }}</span>
+        </p>
+      </mat-list-item>
+    </ng-container>
+    <ng-container *ngIf="state !== 'create'">
+      <mat-list-item pipSelectable *ngFor="let profile of profiles; trackBy: trackById">
+        <mat-icon matListIcon [fontIcon]="deviceprofilesHelp.getDeviceProfileIcon(profile)"></mat-icon>
+        <div matLine class="pip-title"> {{ profile?.name }} </div>
+        <p matLine class="pip-subtitle">
+          <span>{{ deviceprofilesHelp.getDeviceProfileSubtitle(profile) }}</span>
+        </p>
+      </mat-list-item>
+    </ng-container>
+  </mat-list>
+</pip-selected>

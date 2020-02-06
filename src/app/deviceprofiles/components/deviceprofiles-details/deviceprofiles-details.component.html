@@ -1,0 +1,178 @@
+<pip-document-layout>
+  <pip-document-content>
+    <div class="pip-document-content-wrapper">
+      <mat-progress-bar mode="indeterminate" *ngIf="loading" class="pip-loading"></mat-progress-bar>
+      <mat-list *ngIf="state === 'view' && deviceprofile">
+        <mat-list-item>
+          <mat-icon matListIcon [fontIcon]="deviceprofilesHelp.getDeviceProfileIcon(deviceprofile)"></mat-icon>
+          <div matLine class="pip-title"> {{ deviceprofile?.name }} </div>
+          <p matLine class="pip-subtitle">
+            <span>{{ subtitle }}</span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+      <ng-container *ngIf="state === 'create' || state === 'edit'">
+        <div>
+          <form [ngClass]="{'multi': accessConfig.gateways.multi}" fxLayout="column" [formGroup]="form">
+            <mat-form-field>
+              <input matInput name="name" formControlName="name" required />
+              <mat-placeholder>
+                <span>{{ 'DEVICEPROFILES_NAME' | translate }}</span>
+              </mat-placeholder>
+              <mat-error *ngIf="hasError('name', 'required')">{{ 'DEVICEPROFILES_NAME_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select name="base_profile_id" formControlName="base_profile_id"
+                          (selectionChange)="updateAccessConfig()" reuired>
+                <mat-option *ngFor="let opt of baseProfileOptions" [value]="opt.id">
+                  {{ opt.name }}
+                </mat-option>
+              </mat-select>
+              <mat-placeholder>
+                <span>{{ 'DEVICEPROFILES_BASE' | translate }}</span>
+              </mat-placeholder>
+              <mat-error *ngIf="hasError('base_profile_id', 'required')">{{ 'DEVICEPROFILES_BASE_REQUIRED' | translate
+                }}</mat-error>
+            </mat-form-field>
+            <mat-radio-group *ngIf="!accessConfig.gateways.multi" formControlName="gateway" fxLayout="row"
+                             fxLayoutAlign="space-between center">
+              <mat-radio-button *ngFor="let opt of gatewayOptions" [value]="opt.value">{{ opt.name }}</mat-radio-button>
+            </mat-radio-group>
+          </form>
+          <ng-container *ngIf="accessConfig.gateways.multi" [formGroup]="form">
+            <div formGroupName="gateways" fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-slide-toggle *ngFor="let opt of gatewayOptions" [formControlName]="opt.value">{{ opt.name }}
+              </mat-slide-toggle>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <mat-tab-group [selectedIndex]="tabIndex" (selectedIndexChange)="onTabChange($event)">
+        <mat-tab #tab_params>
+          <ng-template mat-tab-label>
+            <mat-icon fxHide fxShow.lt-sm fontIcon="webui-submenu"></mat-icon>
+            <span fxHide.lt-sm>{{ 'DEVICEPROFILES_PARAMS' | translate }}</span>
+          </ng-template>
+          <iqs-params-list *ngIf="deviceprofile?.params?.length" [loading]="loading"
+                           [parameters]="deviceprofile?.params" [type]="DeviceProfileParamsListType.Parameter"
+                           [removable]="accessConfig[DeviceProfileParamsListType.Parameter].modify"
+                           (paramClick)="onParamEdit($event, DeviceProfileParamsListType.Parameter)"
+                           (removeClick)="onParamRemove($event, DeviceProfileParamsListType.Parameter)">
+          </iqs-params-list>
+          <pip-empty-state *ngIf="!deviceprofile?.params?.length">
+            <pip-empty-state-title [text]="'DEVICEPROFILES_PARAMS_EMPTY' | translate" imageUrl="./assets/empty.svg">
+            </pip-empty-state-title>
+            <pip-empty-state-actions [actions]="emptyStateParamsActions"
+                                     *ngIf="accessConfig[DeviceProfileParamsListType.Parameter].modify">
+            </pip-empty-state-actions>
+          </pip-empty-state>
+        </mat-tab>
+        <mat-tab #tab_events>
+          <ng-template mat-tab-label>
+            <mat-icon fxHide fxShow.lt-sm fontIcon="iqt-events"></mat-icon>
+            <span fxHide.lt-sm>{{ 'DEVICEPROFILES_EVENTS' | translate }}</span>
+          </ng-template>
+          <iqs-params-list *ngIf="deviceprofile?.events?.length" [loading]="loading"
+                           [parameters]="deviceprofile?.events" [type]="DeviceProfileParamsListType.Event"
+                           [removable]="accessConfig[DeviceProfileParamsListType.Event].modify"
+                           (paramClick)="onParamEdit($event, DeviceProfileParamsListType.Event)"
+                           (removeClick)="onParamRemove($event, DeviceProfileParamsListType.Event)"></iqs-params-list>
+          <pip-empty-state *ngIf="!deviceprofile?.events?.length">
+            <pip-empty-state-title [text]="'DEVICEPROFILES_EVENTS_EMPTY' | translate" imageUrl="./assets/empty.svg">
+            </pip-empty-state-title>
+            <pip-empty-state-actions [actions]="emptyStateEventsActions"
+                                     *ngIf="accessConfig[DeviceProfileParamsListType.Event].modify">
+            </pip-empty-state-actions>
+          </pip-empty-state>
+        </mat-tab>
+        <mat-tab #tab_commands>
+          <ng-template mat-tab-label>
+            <mat-icon fxHide fxShow.lt-sm fontIcon="iqt-bullhorn"></mat-icon>
+            <span fxHide.lt-sm>{{ 'DEVICEPROFILES_COMMANDS' | translate }}</span>
+          </ng-template>
+          <iqs-params-list *ngIf="deviceprofile?.commands?.length" [loading]="loading"
+                           [parameters]="deviceprofile?.commands" [type]="DeviceProfileParamsListType.Command"
+                           [removable]="accessConfig[DeviceProfileParamsListType.Command].modify"
+                           (paramClick)="onParamEdit($event, DeviceProfileParamsListType.Command)"
+                           (removeClick)="onParamRemove($event, DeviceProfileParamsListType.Command)"></iqs-params-list>
+          <pip-empty-state *ngIf="!deviceprofile?.commands?.length">
+            <pip-empty-state-title [text]="'DEVICEPROFILES_COMMANDS_EMPTY' | translate" imageUrl="./assets/empty.svg">
+            </pip-empty-state-title>
+            <pip-empty-state-actions [actions]="emptyStateCommandsActions"
+                                     *ngIf="accessConfig[DeviceProfileParamsListType.Command].modify">
+            </pip-empty-state-actions>
+          </pip-empty-state>
+        </mat-tab>
+        <mat-tab #tab_configs>
+          <ng-template mat-tab-label>
+            <mat-icon fxHide fxShow.lt-sm fontIcon="iqt-ping"></mat-icon>
+            <span fxHide.lt-sm>{{ 'DEVICEPROFILES_CONFIGS' | translate }}</span>
+          </ng-template>
+          <iqs-params-list *ngIf="deviceprofile?.config?.length" [loading]="loading"
+                           [parameters]="deviceprofile?.config" [type]="DeviceProfileParamsListType.Config"
+                           [removable]="accessConfig[DeviceProfileParamsListType.Config].modify"
+                           (paramClick)="onParamEdit($event, DeviceProfileParamsListType.Config)"
+                           (removeClick)="onParamRemove($event, DeviceProfileParamsListType.Config)"></iqs-params-list>
+          <pip-empty-state *ngIf="!deviceprofile?.config?.length">
+            <pip-empty-state-title [text]="'DEVICEPROFILES_CONFIGS_EMPTY' | translate" imageUrl="./assets/empty.svg">
+            </pip-empty-state-title>
+            <pip-empty-state-actions [actions]="emptyStateConfigsActions"
+                                     *ngIf="accessConfig[DeviceProfileParamsListType.Config].modify">
+            </pip-empty-state-actions>
+          </pip-empty-state>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </pip-document-content>
+  <pip-document-footer>
+    <pip-action-list *ngIf="state === 'view'">
+      <button mat-button class="pip-action-list-item" (click)="onEdit()" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-pen"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_PARAMS_EDIT' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" (click)="onReset()" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-reload"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_PARAMS_RESET' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" (click)="onDelete()" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-trash"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_PARAMS_DELETE' | translate }}</span>
+      </button>
+    </pip-action-list>
+    <pip-action-list *ngIf="state === 'create' || state === 'edit'">
+      <button mat-button class="pip-action-list-item"
+              *ngIf="tabIndex === 0 && accessConfig[DeviceProfileParamsListType.Parameter].modify"
+              (click)="onParamAdd(DeviceProfileParamsListType.Parameter)" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-plus"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_PARAMS_ADD' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item"
+              *ngIf="tabIndex === 1 && accessConfig[DeviceProfileParamsListType.Event].modify"
+              (click)="onParamAdd(DeviceProfileParamsListType.Event)" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-plus"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_EVENTS_ADD' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item"
+              *ngIf="tabIndex === 2 && accessConfig[DeviceProfileParamsListType.Command].modify"
+              (click)="onParamAdd(DeviceProfileParamsListType.Command)" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-plus"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_COMMANDS_ADD' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item"
+              *ngIf="tabIndex === 3 && accessConfig[DeviceProfileParamsListType.Config].modify"
+              (click)="onParamAdd(DeviceProfileParamsListType.Config)" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-plus"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_CONFIGS_ADD' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" (click)="onSave()" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-check"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_SAVE' | translate }}</span>
+      </button>
+      <button mat-button class="pip-action-list-item" (click)="onCancel()" [disabled]="loading">
+        <mat-icon fontSet="webui" fontIcon="webui-cross"></mat-icon>
+        <span class="pip-title">{{ 'DEVICEPROFILES_ACTION_CANCEL' | translate }}</span>
+      </button>
+    </pip-action-list>
+  </pip-document-footer>
+</pip-document-layout>

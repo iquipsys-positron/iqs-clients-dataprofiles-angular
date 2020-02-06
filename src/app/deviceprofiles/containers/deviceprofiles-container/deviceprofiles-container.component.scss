@@ -1,0 +1,12 @@
+:host {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.pip-fab {
+    position: absolute;
+    top: calc(100% - 80px);
+    right: 24px;
+}

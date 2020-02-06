@@ -1,0 +1,16 @@
+:host mat-list-item {
+    min-height: 44px;
+    height: auto!important;
+    display: flex;
+    cursor: pointer;
+    /deep/ .mat-list-item-content {
+        padding: 8px!important;
+        .pip-subtitle {
+            white-space: inherit;
+        }
+    }
+}
+
+.pip-gt-xs :host mat-list-item /deep/ .mat-list-item-content {
+    padding: 8px 24px!important;
+}

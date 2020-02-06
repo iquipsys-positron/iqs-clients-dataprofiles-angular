@@ -1,0 +1,11 @@
+<mat-list dense>
+  <mat-list-item *ngFor="let p of params; trackBy: trackById" (click)="onParamClick(p?.id)">
+    <div matLine class="pip-title"> {{p.title}} </div>
+    <p matLine class="pip-subtitle">
+      <span>{{p.subtitle}}</span>
+    </p>
+    <button mat-icon-button matSuffix (click)="onRemoveClick($event, p?.id)" *ngIf="removable && param?.id >= 100" [disabled]="loading">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>

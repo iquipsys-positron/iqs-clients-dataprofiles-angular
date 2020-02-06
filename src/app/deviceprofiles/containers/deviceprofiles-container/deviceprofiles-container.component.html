@@ -1,0 +1,59 @@
+<pip-menu-layout [ngClass]="{'pip-single-content': isSingle$ | async}">
+  <div class="pip-menu" fxLayout="column">
+    <pip-scrollable fxFlex="fill">
+      <pip-scrollable-content>
+        <iqs-deviceprofiles-list *ngIf="(viewState$ | async) != 'empty' && (viewState$ | async) != 'progress'"
+                                 [profiles]="profiles$ | async" [state]="viewState$ | async"
+                                 (select)="onSelect($event)">
+        </iqs-deviceprofiles-list>
+
+        <pip-empty-state *ngIf="(viewState$ | async) == 'progress' && !media.isMainActive('gt-sm')">
+          <pip-empty-state-title [text]="'DEVICEPROFILES_LOADING' | translate" imageUrl="./assets/progress.svg">
+          </pip-empty-state-title>
+          <div class="pip-progress">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        </pip-empty-state>
+
+        <pip-empty-state *ngIf="(viewState$ | async) == 'empty' && !media.isMainActive('gt-sm')">
+          <pip-empty-state-title [text]="'DEVICEPROFILES_EMPTY' | translate" imageUrl="./assets/empty.svg">
+          </pip-empty-state-title>
+          <pip-empty-state-actions [actions]="emptyStateActions"></pip-empty-state-actions>
+        </pip-empty-state>
+      </pip-scrollable-content>
+    </pip-scrollable>
+    <button mat-fab color="primary" class="pip-fab" (click)="initAdd()"
+            *ngIf="['view', 'edit', 'create'].includes(viewState$ | async)"
+            [disabled]="(loading$ | async) || ['edit', 'create'].includes(viewState$ | async)">
+      <mat-icon aria-label="create">add</mat-icon>
+    </button>
+  </div>
+  <div class="pip-menu-container" [ngSwitch]="viewState$ | async">
+    <pip-document-layout *ngSwitchCase="'progress'">
+      <pip-document-content fxFlex="fill">
+        <pip-empty-state>
+          <pip-empty-state-title [text]="'DEVICEPROFILES_LOADING' | translate" imageUrl="./assets/progress.svg">
+          </pip-empty-state-title>
+          <div class="pip-progress">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        </pip-empty-state>
+      </pip-document-content>
+    </pip-document-layout>
+    <pip-document-layout *ngSwitchCase="'empty'">
+      <pip-document-content fxFlex="fill">
+        <pip-empty-state>
+          <pip-empty-state-title [text]="'DEVICEPROFILES_EMPTY' | translate" imageUrl="./assets/empty.svg">
+          </pip-empty-state-title>
+          <pip-empty-state-actions [actions]="emptyStateActions"></pip-empty-state-actions>
+        </pip-empty-state>
+      </pip-document-content>
+    </pip-document-layout>
+    <iqs-deviceprofiles-details *ngSwitchCase="'create'" [profile]="newDeviceProfile" [loading]="loading$ | async" [state]="viewState$ | async"
+                                (save)="onSave($event)" (cancel)="onCancel()"></iqs-deviceprofiles-details>
+    <iqs-deviceprofiles-details #deviceprofilesDetails *ngSwitchDefault [profile]="selectedProfile$ | async"
+                                [loading]="loading$ | async" [state]="viewState$ | async" (edit)="onEdit()"
+                                (reset)="onReset()" (delete)="onDelete($event)" (save)="onSave($event)"
+                                (cancel)="onCancel()"></iqs-deviceprofiles-details>
+  </div>
+</pip-menu-layout>

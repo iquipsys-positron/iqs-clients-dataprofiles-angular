@@ -1,0 +1,82 @@
+<h1 mat-dialog-title class="pip-header">{{ dialogTitle | translate }}</h1>
+<div mat-dialog-content class="pip-content">
+  <form fxLayout="column" [formGroup]="form">
+    <mat-form-field>
+      <input matInput name="id" type="number" formControlName="id" required />
+      <mat-placeholder>
+        <span>{{ 'TYPE_DIALOG_INDEX' | translate }}</span>
+      </mat-placeholder>
+      <mat-error *ngIf="hasError('id', 'required')">{{ 'TYPE_DIALOG_INDEX_REQUIRED' | translate }}</mat-error>
+      <mat-error *ngIf="hasError('id', 'exist')">{{ 'TYPE_DIALOG_INDEX_EXIST' | translate }}</mat-error>
+      <mat-error *ngIf="hasError('id', 'min')">
+          {{ 'TYPE_DIALOG_INDEX_GT_100' | translate:{value: form.get('id').getError('min').min} }}
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput name="name" formControlName="name" required />
+      <mat-placeholder>
+        <span>{{ 'TYPE_DIALOG_NAME' | translate }}</span>
+      </mat-placeholder>
+      <mat-error *ngIf="hasError('name', 'required')">{{ 'TYPE_DIALOG_NAME_REQUIRED' | translate }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select name="value_type" formControlName="value_type" required>
+        <mat-option *ngFor="let opt of typeOptions" [value]="opt">
+          {{ 'DATAPROFILES_VALUE_TYPE_' + opt.toUpperCase() | translate }}
+        </mat-option>
+      </mat-select>
+      <mat-placeholder>
+        <span>{{ 'TYPE_DIALOG_VALUE_TYPE' | translate }}</span>
+      </mat-placeholder>
+      <mat-error *ngIf="hasError('value_type', 'required')">{{ 'TYPE_DIALOG_VALUE_TYPE_REQUIRED' | translate }}</mat-error>
+    </mat-form-field>
+    <div fxLayout="row" fxLayoutGap="8px" *ngIf="['int', 'float'].indexOf(form.get('value_type').value) >= 0">
+      <mat-form-field>
+        <input matInput type="number" name="min_value" formControlName="min_value" />
+        <mat-placeholder>
+          <span>{{ 'TYPE_DIALOG_MIN_VALUE' | translate }}</span>
+        </mat-placeholder>
+        <mat-error *ngIf="hasError('min_value', 'range')">{{ 'TYPE_DIALOG_MIN_RANGE' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" name="max_value" formControlName="max_value" />
+        <mat-placeholder>
+          <span>{{ 'TYPE_DIALOG_MAX_VALUE' | translate }}</span>
+        </mat-placeholder>
+        <mat-error *ngIf="hasError('max_value', 'range')">{{ 'TYPE_DIALOG_MAX_RANGE' | translate }}</mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-select name="value_unit" formControlName="value_unit">
+        <mat-option *ngFor="let opt of unitOptions" [value]="opt">
+          {{ 'DATAPROFILES_UNIT_' + opt | translate }}
+        </mat-option>
+      </mat-select>
+      <mat-placeholder>
+        <span>{{ 'TYPE_DIALOG_UNIT' | translate }}</span>
+      </mat-placeholder>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select name="algorithm" formControlName="algorithm" required>
+        <mat-option *ngFor="let opt of algOptions" [value]="opt">
+          {{ 'DATAPROFILES_ALG_' + opt.toUpperCase() | translate }}
+        </mat-option>
+      </mat-select>
+      <mat-placeholder>
+        <span>{{ 'TYPE_DIALOG_ALG' | translate }}</span>
+      </mat-placeholder>
+      <mat-error *ngIf="hasError('algorithm', 'required')">{{ 'TYPE_DIALOG_ALG_REQUIRED' | translate }}</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <ng-container *ngIf="!readonly">
+    <button mat-button matDialogClose>{{ 'TYPE_DIALOG_ACTION_CANCEL' | translate }}</button>
+    <button mat-button (click)="onTryAdd()" [disabled]="form.invalid">
+      {{ actionButtonText | translate }}
+    </button>
+  </ng-container>
+  <ng-container *ngIf="readonly">
+      <button mat-button matDialogClose>{{ 'TYPE_DIALOG_ACTION_CLOSE' | translate }}</button>
+  </ng-container>
+</div>

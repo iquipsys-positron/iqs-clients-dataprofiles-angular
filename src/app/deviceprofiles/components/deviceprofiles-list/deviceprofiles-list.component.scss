@@ -1,0 +1,26 @@
+@import '~pip-webui2-themes/variables';
+
+:host {
+    mat-list-item {
+        cursor: pointer;
+    }
+    mat-icon {
+        padding: 8px!important;
+    }
+}
+
+@mixin deviceprofiles-list-mixin($theme) {
+    $primary: map-get($theme, primary);
+    :host {
+        mat-icon {
+            background-color: mat-color($primary);
+            color: mat-color($primary, default-contrast);
+        }
+    }
+}
+
+@each $class, $theme in $themes {
+    .#{$class} {
+        @include deviceprofiles-list-mixin($theme);
+    }
+}

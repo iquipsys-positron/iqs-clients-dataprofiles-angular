@@ -1,0 +1,20 @@
+<h1 mat-dialog-title class="pip-header">{{ 'SELECT_BASE_DIALOG_TITLE' | translate }}</h1>
+<div mat-dialog-content class="pip-content">
+  <pip-selected>
+    <mat-list>
+      <ng-container *ngFor="let profile of profiles$ | async">
+        <mat-list-item pipSelectable (click)="selectProfile(profile)">
+          <mat-icon matListIcon [fontIcon]="deviceprofilesHelp.getDeviceProfileIcon(profile)"></mat-icon>
+          <div matLine class="pip-title"> {{ profile?.name }} </div>
+          <p matLine class="pip-subtitle">
+            <span>{{ deviceprofilesHelp.getDeviceProfileSubtitle(profile) }}</span>
+          </p>
+        </mat-list-item>
+      </ng-container>
+    </mat-list>
+  </pip-selected>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button matDialogClose>{{ 'SELECT_BASE_DIALOG_ACTION_CANCEL' | translate }}</button>
+  <button mat-button [matDialogClose]="profile">{{ 'SELECT_BASE_DIALOG_ACTION_CREATE' | translate }}</button>
+</div>

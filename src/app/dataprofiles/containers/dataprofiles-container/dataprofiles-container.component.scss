@@ -1,0 +1,67 @@
+@import "~pip-webui2-themes/variables";
+
+:host {
+    pip-shadow {
+        margin-top: 64px;
+    }
+    pip-document-content {
+        padding: 0px!important;
+        height: 100%;
+        .pip-document-content-wrapper {
+            flex: 0 1 100%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            mat-tab-group {
+                flex-grow: 1;
+                /deep/ .mat-tab-body-wrapper {
+                    flex: 1 1 100%;
+                    min-height: 136px;
+                }
+                /deep/ .mat-tab-label {
+                    text-transform: uppercase;
+                    min-width: 0px;
+                    padding: 0 16px;
+                    &.mat-tab-label-active {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+        .pip-loading {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 1px;
+        }
+        .pip-document-heading {
+            margin: 28px 24px 12px;
+            .pip-title {
+                height: 1.25em;
+                line-height: 1.5em;
+            }
+            .pip-subtitle {
+                font-size: 0.875em;
+            }
+        }
+    }
+}
+
+.pip-lt-sm :host /deep/ {
+    .mat-tab-label {
+        flex: 1;
+    }
+}
+
+@mixin dataprofiles-container-mixin($theme) {
+    $accent: map-get($theme, accent);
+    .mat-ink-bar {
+        background-color: mat-color($accent)!important;
+    }
+}
+
+@each $class,$theme in $themes {
+    /deep/ .#{$class} {
+        @include dataprofiles-container-mixin($theme);
+    }
+}
