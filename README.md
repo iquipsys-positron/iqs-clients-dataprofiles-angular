@@ -1,6 +1,4 @@
-[![pipeline status](https://gitlab.com/iqs-client2/iqs-clients2-dataprofiles-app/badges/master/pipeline.svg)](https://gitlab.com/iqs-client2/iqs-clients2-dataprofiles-app/commits/master)
-
-# IqsClients2DataprofilesApp
+# IqsClientsDataprofilesAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
 
