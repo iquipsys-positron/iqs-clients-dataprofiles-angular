@@ -37,7 +37,7 @@
     "@ngx-translate/core": "^11.0.1",
     "core-js": "^2.5.4",
     "immutable": "^4.0.0-rc.12",
-    "iqs-libs-clientshell2-angular": "^2.0.1",
+    "iqs-libs-clientshell2-angular": "^2.0.2",
     "lodash": "^4.17.11",
     "pip-webui2-behaviors": "^1.1.9",
     "pip-webui2-buttons": "^1.1.3",
