@@ -11,9 +11,9 @@ import { BaseDeviceProfile, DeviceProfile } from '../models';
 })
 export class IqsDeviceprofilesDataService extends CommonDataService {
 
-    private RESOURCE = '/api/v1/organizations/:organization_id/devices/profiles';
-    private RESOURCE_SINGLE = '/api/v1/organizations/:organization_id/devices/profiles/:profile_id';
-    private RESOURCE_BASE = '/api/v1/organizations/:organization_id/devices/profiles/base';
+    private RESOURCE = '/api/v1/organizations/:org_id/devices/profiles';
+    private RESOURCE_SINGLE = '/api/v1/organizations/:org_id/devices/profiles/:profile_id';
+    private RESOURCE_BASE = '/api/v1/organizations/:org_id/devices/profiles/base';
 
     constructor(
         private sessionConfig: IqsSessionConfigService,
@@ -23,7 +23,7 @@ export class IqsDeviceprofilesDataService extends CommonDataService {
 
     public readBaseDeviceProfiles(): Observable<BaseDeviceProfile[]> {
         const params = {
-            organization_id: this.organizationsService.current && this.organizationsService.current.id
+            org_id: this.organizationsService.current && this.organizationsService.current.id
         };
 
         return this.http.get<BaseDeviceProfile[]>(this.buildUrl(this.sessionConfig.serverUrl + this.RESOURCE_BASE, params));
@@ -31,7 +31,7 @@ export class IqsDeviceprofilesDataService extends CommonDataService {
 
     public readDeviceProfiles(): Observable<DeviceProfile[]> {
         const params = {
-            organization_id: this.organizationsService.current && this.organizationsService.current.id
+            org_id: this.organizationsService.current && this.organizationsService.current.id
         };
 
         return this.http.get<DataPage<DeviceProfile>>(this.buildUrl(this.sessionConfig.serverUrl + this.RESOURCE, params))
@@ -42,26 +42,26 @@ export class IqsDeviceprofilesDataService extends CommonDataService {
 
     public createDeviceProfile(data: DeviceProfile): Observable<DeviceProfile> {
         const params = {
-            organization_id: this.organizationsService.current && this.organizationsService.current.id
+            org_id: this.organizationsService.current && this.organizationsService.current.id
         };
-        if (!data.organization_id) { data.organization_id = params.organization_id; }
+        if (!data.org_id) { data.org_id = params.org_id; }
 
         return this.http.post<DeviceProfile>(this.buildUrl(this.sessionConfig.serverUrl + this.RESOURCE, params), data);
     }
 
     public updateDeviceProfile(id: string, data: DeviceProfile): Observable<DeviceProfile> {
         const params = {
-            organization_id: this.organizationsService.current && this.organizationsService.current.id,
+            org_id: this.organizationsService.current && this.organizationsService.current.id,
             profile_id: id
         };
-        if (!data.organization_id) { data.organization_id = params.organization_id; }
+        if (!data.org_id) { data.org_id = params.org_id; }
 
         return this.http.put<DeviceProfile>(this.buildUrl(this.sessionConfig.serverUrl + this.RESOURCE_SINGLE, params), data);
     }
 
     public deleteDeviceProfile(id: string): Observable<DeviceProfile> {
         const params = {
-            organization_id: this.organizationsService.current && this.organizationsService.current.id,
+            org_id: this.organizationsService.current && this.organizationsService.current.id,
             profile_id: id
         };
 

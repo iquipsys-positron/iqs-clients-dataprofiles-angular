@@ -13,7 +13,7 @@ import { utils } from '../../../../mock';
 
 describe('[Dataprofiles] components/state-list', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDataprofilesStateListComponent;
     let fixture: ComponentFixture<IqsDataprofilesStateListComponent>;
 
@@ -41,7 +41,7 @@ describe('[Dataprofiles] components/state-list', () => {
     });
 
     it('should update on changes', () => {
-        const dataprofiles: DataProfile = cloneDeep(utils.dataprofiles.findByOrganizationId(organization_id));
+        const dataprofiles: DataProfile = cloneDeep(utils.dataprofiles.findByOrganizationId(org_id));
         dataprofiles.state_types.push(...[
             {
                 'id': 5,

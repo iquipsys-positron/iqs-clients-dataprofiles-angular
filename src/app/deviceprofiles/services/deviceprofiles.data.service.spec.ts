@@ -13,7 +13,7 @@ import { utils, mockDeviceprofilesProvider } from '../../../mock';
 
 describe('[Deviceprofiles] services/deviceprofiles.data', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let service: IqsDeviceprofilesDataService;
     let expectedBaseDeviceprofiles: BaseDeviceProfile[];
     let expectedDeviceprofiles: DeviceProfile[];
@@ -37,7 +37,7 @@ describe('[Deviceprofiles] services/deviceprofiles.data', () => {
                 provide: IqsOrganizationsService,
                 useValue: {
                     current: {
-                        id: organization_id
+                        id: org_id
                     }
                 }
             }
@@ -48,7 +48,7 @@ describe('[Deviceprofiles] services/deviceprofiles.data', () => {
         service = TestBed.get(IqsDeviceprofilesDataService);
         resetToCurrentDefault();
         expectedBaseDeviceprofiles = utils.deviceprofiles.getBaseDeviceProfiles();
-        expectedDeviceprofiles = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id));
+        expectedDeviceprofiles = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id));
     });
 
     it('should read base deviceprofiles', done => {
@@ -68,11 +68,11 @@ describe('[Deviceprofiles] services/deviceprofiles.data', () => {
     it('should create deviceprofile', done => {
         const profile = sample(expectedDeviceprofiles);
         delete profile.id;
-        delete profile.organization_id;
+        delete profile.org_id;
         service.createDeviceProfile(profile).subscribe(p => {
             expect(p).toEqual(jasmine.objectContaining(profile));
             expect(p.id).toBeTruthy();
-            expect(p.organization_id).toEqual(organization_id);
+            expect(p.org_id).toEqual(org_id);
             done();
         });
     });
@@ -80,11 +80,11 @@ describe('[Deviceprofiles] services/deviceprofiles.data', () => {
     it('should update deviceprofile', done => {
         const profile: DeviceProfile = sample(expectedDeviceprofiles);
         profile.name = 'test';
-        delete profile.organization_id;
+        delete profile.org_id;
         service.updateDeviceProfile(profile.id, profile).subscribe(p => {
             expect(p).toEqual(jasmine.objectContaining(profile));
             expect(p.name).toEqual('test');
-            expect(p.organization_id).toEqual(organization_id);
+            expect(p.org_id).toEqual(org_id);
             done();
         });
     });

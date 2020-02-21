@@ -6,14 +6,14 @@ import { BaseDeviceProfile, DeviceProfile } from '../../app/deviceprofiles';
 
 export class IqsDeviceprofilesDataServiceMock {
 
-    private organization_id: string;
+    private org_id: string;
     private error: any;
 
     public init(payload: {
-        organization_id: string,
+        org_id: string,
         error: any
     }) {
-        this.organization_id = payload.organization_id;
+        this.org_id = payload.org_id;
         this.error = payload.error;
     }
 
@@ -22,7 +22,7 @@ export class IqsDeviceprofilesDataServiceMock {
     }
 
     public readDeviceProfiles(): Observable<DeviceProfile[]> {
-        return of(utils.deviceprofiles.findByOrganizationId(this.organization_id));
+        return of(utils.deviceprofiles.findByOrganizationId(this.org_id));
     }
 
     public createDeviceProfile(data: DeviceProfile): Observable<DeviceProfile> {

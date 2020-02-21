@@ -5,7 +5,7 @@ import { ConfigParameter } from './ConfigParameter';
 
 export class DeviceProfile {
     public id: string;
-    public organization_id: string;
+    public org_id: string;
     public base_profile_id: string;
     public name: string;
     public gateways?: string[];

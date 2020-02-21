@@ -5,7 +5,7 @@ import { BaseDeviceProfile, DeviceProfile, DeviceprofilesViewState } from '../mo
 export interface DeviceprofilesState {
     base: BaseDeviceProfile[];
     profiles: DeviceProfile[];
-    selectedIndex: number;
+    selectedId: string;
     state: DeviceprofilesViewState;
     isSingle: boolean;
     loading: boolean;
@@ -16,14 +16,17 @@ export const getDeviceprofilesStoreState = createFeatureSelector<DeviceprofilesS
 
 export const getDeviceprofilesBase = createSelector(getDeviceprofilesStoreState, (state: DeviceprofilesState) => state.base);
 export const getDeviceprofilesData = createSelector(getDeviceprofilesStoreState, (state: DeviceprofilesState) => state.profiles);
+export const getDeviceprofilesSelectedId = createSelector(getDeviceprofilesStoreState, (state: DeviceprofilesState) => state.selectedId);
 export const getDeviceprofilesSelectedIndex = createSelector(getDeviceprofilesStoreState,
-    (state: DeviceprofilesState) => state.selectedIndex
-);
-export const getDeviceprofilesSelectedProfile = createSelector(getDeviceprofilesStoreState,
     (state: DeviceprofilesState) => {
-        if (!state.profiles || !state.profiles.length || state.selectedIndex === null
-            || state.selectedIndex < 0 || state.selectedIndex > state.profiles.length - 1) { return null; }
-        return state.profiles[state.selectedIndex];
+        if (!state || !state.profiles || !state.selectedId) { return -1; }
+        return state.profiles.findIndex(p => p.id === state.selectedId);
+    }
+);
+export const getDeviceprofilesSelectedProfile = createSelector(getDeviceprofilesStoreState, getDeviceprofilesSelectedIndex,
+    (state: DeviceprofilesState, idx: number) => {
+        if (!state.profiles || !state.profiles.length || idx < 0 || idx > state.profiles.length - 1) { return null; }
+        return state.profiles[idx];
     }
 );
 export const getDeviceprofilesState = createSelector(getDeviceprofilesStoreState, (state: DeviceprofilesState) => state.state);

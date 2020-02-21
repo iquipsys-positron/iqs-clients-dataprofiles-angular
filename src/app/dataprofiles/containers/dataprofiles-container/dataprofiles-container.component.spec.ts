@@ -25,7 +25,7 @@ import { IqsDataprofilesServiceMock, resetToCurrentDefault } from '../../../../m
 
 describe('[Dataprofiles] containers/dataprofiles-container', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDataprofilesContainerComponent;
     let fixture: ComponentFixture<IqsDataprofilesContainerComponent>;
 
@@ -59,7 +59,7 @@ describe('[Dataprofiles] containers/dataprofiles-container', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         const dataprofilesService: IqsDataprofilesServiceMock = TestBed.get(IqsDataprofilesService);
-        dataprofilesService.init({ organization_id });
+        dataprofilesService.init({ org_id });
         spyOn(component, 'ngOnInit');
         resetToCurrentDefault();
     });
@@ -335,7 +335,7 @@ describe('[Dataprofiles] containers/dataprofiles-container', () => {
 
     it('should reset', async () => {
         const emptyDataprofiles: DataProfile = {
-            id: organization_id
+            id: org_id
         };
         const dialogSpy = spyOn((<any>component).dialog, 'open').and.callThrough();
         const savedDataprofiles = cloneDeep(component.dataprofiles);

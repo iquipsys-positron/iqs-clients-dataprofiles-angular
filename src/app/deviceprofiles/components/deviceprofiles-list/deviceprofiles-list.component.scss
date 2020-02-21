@@ -1,6 +1,8 @@
 @import '~pip-webui2-themes/variables';
 
 :host {
+    flex: 1;
+    
     mat-list-item {
         cursor: pointer;
     }

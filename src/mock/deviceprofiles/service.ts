@@ -18,7 +18,7 @@ export class IqsDeviceprofilesServiceMock {
     private _selectedIndex$: BehaviorSubject<number>;
     private _state$: BehaviorSubject<DeviceprofilesViewState>;
     private _error$: BehaviorSubject<any>;
-    private organization_id: string;
+    private org_id: string;
 
     constructor() {
         this._baseDeviceprofiles$ = new BehaviorSubject([]);
@@ -31,11 +31,11 @@ export class IqsDeviceprofilesServiceMock {
     }
 
     public init(payload?: {
-        organization_id: string
+        org_id: string
     }): void {
-        this.organization_id = payload && payload.organization_id || '00000000000000000000000000000000';
+        this.org_id = payload && payload.org_id || '00000000000000000000000000000000';
         this._baseDeviceprofiles$.next(utils.deviceprofiles.getBaseDeviceProfiles());
-        this._deviceprofiles$.next(utils.deviceprofiles.findByOrganizationId(this.organization_id));
+        this._deviceprofiles$.next(utils.deviceprofiles.findByOrganizationId(this.org_id));
         this.state = DeviceprofilesViewState.View;
     }
 

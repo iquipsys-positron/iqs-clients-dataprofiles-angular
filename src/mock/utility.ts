@@ -12,11 +12,11 @@ import {
 let lastDeviceprofileId = storedDeviceprofiles.length ? Number(storedDeviceprofiles[storedDeviceprofiles.length - 1].id) : 0;
 
 export const dataprofiles = {
-    findByOrganizationId: (organization_id: string): DataProfile => {
-        return find(storedDataprofiles, ['id', organization_id]);
+    findByOrganizationId: (org_id: string): DataProfile => {
+        return find(storedDataprofiles, ['id', org_id]);
     },
-    updateByOrganizationId: (organization_id: string, data: DataProfile): DataProfile => {
-        let idx = findIndex(storedDataprofiles, ['id', organization_id]);
+    updateByOrganizationId: (org_id: string, data: DataProfile): DataProfile => {
+        let idx = findIndex(storedDataprofiles, ['id', org_id]);
         if (idx < 0) {
             storedDataprofiles.push(data);
             idx = storedDataprofiles.length - 1;
@@ -29,14 +29,14 @@ export const dataprofiles = {
 };
 
 export const deviceprofiles = {
-    findByOrganizationId: (organization_id: string): DeviceProfile[] => {
-        return storedDeviceprofiles.filter(dp => dp.organization_id === organization_id);
+    findByOrganizationId: (org_id: string): DeviceProfile[] => {
+        return storedDeviceprofiles.filter(dp => dp.org_id === org_id);
     },
     getBaseDeviceProfiles: (): BaseDeviceProfile[] => {
         return storedBaseDeviceProfiles;
     },
-    findById: (organization_id: string, id: string): DeviceProfile => {
-        return deviceprofiles.findByOrganizationId(organization_id).find(it => it.id === id);
+    findById: (org_id: string, id: string): DeviceProfile => {
+        return deviceprofiles.findByOrganizationId(org_id).find(it => it.id === id);
     },
     create: (data: DeviceProfile): DeviceProfile => {
         lastDeviceprofileId++;

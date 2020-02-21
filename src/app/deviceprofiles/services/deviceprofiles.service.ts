@@ -97,7 +97,7 @@ export class IqsDeviceprofilesService {
     public selectbyIndex(idx: number) {
         this.deviceprofiles$.pipe(filter(dp => dp !== null && dp.length > 0), take(1)).subscribe(profiles => {
             if (idx >= 0 && idx < profiles.length) {
-                this.store.dispatch(new DeviceprofilesSelectAction({ idx, id: profiles[idx].id }));
+                this.store.dispatch(new DeviceprofilesSelectAction({ id: profiles[idx].id }));
                 this.changeState(DeviceprofilesViewState.View);
             }
         });
@@ -107,7 +107,7 @@ export class IqsDeviceprofilesService {
         this.deviceprofiles$.pipe(filter(dp => dp !== null && dp.length > 0), take(1)).subscribe(profiles => {
             const idx = findIndex(profiles, ['id', id]);
             if (idx >= 0) {
-                this.store.dispatch(new DeviceprofilesSelectAction({ idx, id: profiles[idx].id }));
+                this.store.dispatch(new DeviceprofilesSelectAction({ id: profiles[idx].id }));
                 this.changeState(DeviceprofilesViewState.View);
             }
         });

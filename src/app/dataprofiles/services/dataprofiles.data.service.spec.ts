@@ -12,7 +12,7 @@ import { utils, mockDataprofilesProvider } from '../../../mock';
 
 describe('[Dataprofiles] services/dataprofiles.data', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let service: IqsDataprofilesDataService;
     let expectedDataprofiles: DataProfile;
 
@@ -35,7 +35,7 @@ describe('[Dataprofiles] services/dataprofiles.data', () => {
                 provide: IqsOrganizationsService,
                 useValue: {
                     current: {
-                        id: organization_id
+                        id: org_id
                     }
                 }
             }
@@ -45,7 +45,7 @@ describe('[Dataprofiles] services/dataprofiles.data', () => {
     beforeEach(() => {
         service = TestBed.get(IqsDataprofilesDataService);
         resetToCurrentDefault();
-        expectedDataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(organization_id));
+        expectedDataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(org_id));
     });
 
     it('should read dataprofiles', done => {
@@ -59,7 +59,7 @@ describe('[Dataprofiles] services/dataprofiles.data', () => {
         expectedDataprofiles.param_types = [];
         delete expectedDataprofiles.id;
         service.updateDataprofiles(expectedDataprofiles).subscribe(dps => {
-            expect(dps).toEqual({...expectedDataprofiles, id: organization_id});
+            expect(dps).toEqual({...expectedDataprofiles, id: org_id});
             done();
         });
     });

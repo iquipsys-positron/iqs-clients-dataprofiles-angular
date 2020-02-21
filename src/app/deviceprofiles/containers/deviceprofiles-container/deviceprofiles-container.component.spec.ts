@@ -24,7 +24,7 @@ import {
 
 describe('[Deviceprofiles] containers/deviceprofiles-container', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDeviceprofilesContainerComponent;
     let fixture: ComponentFixture<IqsDeviceprofilesContainerComponent>;
     let deviceprofilesService: IqsDeviceprofilesServiceMock;
@@ -57,7 +57,7 @@ describe('[Deviceprofiles] containers/deviceprofiles-container', () => {
 
     beforeEach(() => {
         deviceprofilesService = TestBed.get(IqsDeviceprofilesService);
-        deviceprofilesService.init({ organization_id });
+        deviceprofilesService.init({ org_id });
         fixture = TestBed.createComponent(IqsDeviceprofilesContainerComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -368,14 +368,14 @@ describe('[Deviceprofiles] containers/deviceprofiles-container', () => {
         const createSpy = spyOn(deviceprofilesService, 'create').and.callFake(() => { deviceprofilesService.loading = true; });
         const updateSpy = spyOn(deviceprofilesService, 'update').and.callFake(() => { deviceprofilesService.loading = true; });
         const changeStateSpy = spyOn(deviceprofilesService, 'changeState');
-        component.onSave({ id: 'some id', profile: { id: '', name: 'test', organization_id, base_profile_id: 'custom' } });
+        component.onSave({ id: 'some id', profile: { id: '', name: 'test', org_id: org_id, base_profile_id: 'custom' } });
         expect(updateSpy).toHaveBeenCalled();
         expect(changeStateSpy).not.toHaveBeenCalled();
         deviceprofilesService.loading = false;
         expect(changeStateSpy).toHaveBeenCalled();
 
         changeStateSpy.calls.reset();
-        component.onSave({ id: undefined, profile: { id: '', name: 'test', organization_id, base_profile_id: 'custom' } });
+        component.onSave({ id: undefined, profile: { id: '', name: 'test', org_id: org_id, base_profile_id: 'custom' } });
         expect(createSpy).toHaveBeenCalled();
         expect(changeStateSpy).not.toHaveBeenCalled();
         deviceprofilesService.loading = false;
@@ -456,7 +456,7 @@ describe('[Deviceprofiles] containers/deviceprofiles-container', () => {
 
 describe('[Deviceprofiles] containers/deviceprofiles-container', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDeviceprofilesContainerComponent;
     let fixture: ComponentFixture<IqsDeviceprofilesContainerComponent>;
     let deviceprofilesService: IqsDeviceprofilesServiceMock;
@@ -493,7 +493,7 @@ describe('[Deviceprofiles] containers/deviceprofiles-container', () => {
 
     beforeEach(() => {
         deviceprofilesService = TestBed.get(IqsDeviceprofilesService);
-        deviceprofilesService.init({ organization_id });
+        deviceprofilesService.init({ org_id });
         fixture = TestBed.createComponent(IqsDeviceprofilesContainerComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

@@ -11,7 +11,7 @@ import { DeviceProfileParamsListType, DeviceProfile, ActuatorCommand, SensorEven
 
 describe('[Deviceprofiles] components/params-list', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDeviceprofilesParamsListComponent;
     let fixture: ComponentFixture<IqsDeviceprofilesParamsListComponent>;
 
@@ -35,7 +35,7 @@ describe('[Deviceprofiles] components/params-list', () => {
 
     beforeEach(() => {
         const dataprofilesService: IqsDataprofilesServiceMock = TestBed.get(IqsDataprofilesService);
-        dataprofilesService.init({ organization_id });
+        dataprofilesService.init({ org_id });
         fixture = TestBed.createComponent(IqsDeviceprofilesParamsListComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -46,7 +46,7 @@ describe('[Deviceprofiles] components/params-list', () => {
     });
 
     it('should react for changes', async () => {
-        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id)[0]);
+        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id)[0]);
         const testCases = [
             {
                 type: DeviceProfileParamsListType.Command,

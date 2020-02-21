@@ -10,7 +10,7 @@ import { DeviceprofilesViewState } from '../../models';
 
 describe('[Deviceprofiles] components/deviceprofiles-list', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDeviceprofilesListComponent;
     let fixture: ComponentFixture<IqsDeviceprofilesListComponent>;
 
@@ -34,7 +34,7 @@ describe('[Deviceprofiles] components/deviceprofiles-list', () => {
 
     beforeEach(() => {
         const deviceprofilesService: IqsDeviceprofilesServiceMock = TestBed.get(IqsDeviceprofilesService);
-        deviceprofilesService.init({ organization_id });
+        deviceprofilesService.init({ org_id });
         fixture = TestBed.createComponent(IqsDeviceprofilesListComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

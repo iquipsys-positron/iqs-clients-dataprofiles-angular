@@ -14,7 +14,7 @@ import { utils } from '../../../../mock';
 
 describe('[Dataprofiles] components/type-list', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDataprofilesTypeListComponent;
     let fixture: ComponentFixture<IqsDataprofilesTypeListComponent>;
 
@@ -43,7 +43,7 @@ describe('[Dataprofiles] components/type-list', () => {
     });
 
     it('should update on changes', () => {
-        const dataprofiles: DataProfile = cloneDeep(utils.dataprofiles.findByOrganizationId(organization_id));
+        const dataprofiles: DataProfile = cloneDeep(utils.dataprofiles.findByOrganizationId(org_id));
         dataprofiles.param_types.push(...[
             {
                 id: 8,

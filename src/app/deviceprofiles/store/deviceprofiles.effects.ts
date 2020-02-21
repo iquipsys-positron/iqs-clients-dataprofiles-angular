@@ -42,7 +42,6 @@ export class IqsDeviceprofilesEffects {
                 let idx = findIndex(action.payload.profiles, ['id', profile_id]);
                 if (idx < 0) { idx = 0; }
                 actions.push(new actionsFromDeviceprofiles.DeviceprofilesSelectAction({
-                    idx,
                     id: action.payload.profiles[idx].id
                 }));
             }

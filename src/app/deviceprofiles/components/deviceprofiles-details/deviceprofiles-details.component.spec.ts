@@ -16,7 +16,7 @@ import { IqsDataprofilesServiceMock, IqsDeviceprofilesServiceMock, utils } from 
 
 describe('[Deviceprofiles] components/deviceprofiles-details', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     const defaultAccessConfig = {
         [DeviceProfileParamsListType.Parameter]: {
             modify: false,
@@ -73,8 +73,8 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
     beforeEach(() => {
         const dataprofilesService: IqsDataprofilesServiceMock = TestBed.get(IqsDataprofilesService);
         const deviceprofilesService: IqsDeviceprofilesServiceMock = TestBed.get(IqsDeviceprofilesService);
-        dataprofilesService.init({ organization_id });
-        deviceprofilesService.init({ organization_id });
+        dataprofilesService.init({ org_id });
+        deviceprofilesService.init({ org_id });
         fixture = TestBed.createComponent(IqsDeviceprofilesDetailsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -123,7 +123,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
     });
 
     it('should set profile', async () => {
-        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id)[0]);
+        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id)[0]);
         component.profile = deviceprofile;
         fixture.detectChanges();
         await fixture.whenStable();
@@ -134,7 +134,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
             name: null,
             base_profile_id: null,
             gateways: [],
-            organization_id
+            org_id: org_id
         };
         component.profile = anotherProfile;
         fixture.detectChanges();
@@ -155,7 +155,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
     });
 
     it('should update access config', async () => {
-        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id)[0]);
+        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id)[0]);
         const baseProfile: BaseDeviceProfile = utils.deviceprofiles.getBaseDeviceProfiles()
             .find(bdp => bdp.id === deviceprofile.base_profile_id);
         const updateAccessConfigSpy = spyOn(component, 'updateAccessConfig').and.callThrough();
@@ -206,7 +206,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
             id: '1',
             name: 'test',
             base_profile_id: 'custom',
-            organization_id,
+            org_id: org_id,
             gateways: ['mqtt', 'lora']
         };
         component.profile = deviceprofile;
@@ -223,7 +223,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
     });
 
     it('should cancel changes', async () => {
-        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id)[0]);
+        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id)[0]);
         component.profile = deviceprofile;
         fixture.detectChanges();
         await fixture.whenStable();
@@ -249,7 +249,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
         const resetSpy = spyOn(component.reset, 'emit');
         const deleteSpy = spyOn(component.delete, 'emit');
         const cancelSpy = spyOn(component.cancel, 'emit');
-        component.profile = { id: '4', name: 'test', base_profile_id: 'custom', organization_id };
+        component.profile = { id: '4', name: 'test', base_profile_id: 'custom', org_id: org_id };
         fixture.detectChanges();
         await fixture.whenStable();
         component.onEdit();
@@ -270,7 +270,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
         };
         const dialogSpy = spyOn((<any>component).dialog, 'open').and.callThrough();
         const joc = jasmine.objectContaining;
-        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id)[0]);
+        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id)[0]);
         delete deviceprofile.commands;
         component.profile = deviceprofile;
         fixture.detectChanges();
@@ -335,7 +335,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
     it('should call Param edit dialog', async () => {
         const dialogSpy = spyOn((<any>component).dialog, 'open').and.callThrough();
         const joc = jasmine.objectContaining;
-        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id)[0]);
+        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id)[0]);
         deviceprofile.base_profile_id = 'custom';
         deviceprofile.commands.push({ id: 100 });
         deviceprofile.config.push({ id: 100 });
@@ -447,7 +447,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
     it('should call Param delete dialog', async () => {
         const dialogSpy = spyOn((<any>component).dialog, 'open').and.callThrough();
         const joc = jasmine.objectContaining;
-        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id)[0]);
+        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id)[0]);
         deviceprofile.base_profile_id = 'custom';
         deviceprofile.commands.push({ id: 100 });
         deviceprofile.config.push({ id: 100 });
@@ -579,7 +579,7 @@ describe('[Deviceprofiles] components/deviceprofiles-details', () => {
             id: '1',
             name: 'test',
             base_profile_id: 'custom',
-            organization_id,
+            org_id: org_id,
             gateways: ['mqtt', 'lora']
         };
         component.profile = deviceprofile;

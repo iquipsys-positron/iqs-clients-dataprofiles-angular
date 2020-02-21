@@ -19,7 +19,7 @@ import { DataProfileType } from '../models';
 
 describe('[Dataprofiles] services/dataprofiles', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let service: IqsDataprofilesService;
 
     beforeEach(() => TestBed.configureTestingModule({
@@ -61,7 +61,7 @@ describe('[Dataprofiles] services/dataprofiles', () => {
     });
 
     it('should get type by id', () => {
-        const extectedDataprofiles = utils.dataprofiles.findByOrganizationId(organization_id);
+        const extectedDataprofiles = utils.dataprofiles.findByOrganizationId(org_id);
         const store: MockStore<DataprofilesState> = TestBed.get(Store);
         spyOn(store, 'select').and.callFake((selector: MemoizedSelector<DataprofilesState, any>) => {
             return store.pipe(

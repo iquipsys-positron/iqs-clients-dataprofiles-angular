@@ -13,13 +13,13 @@ import { utils } from '../../../../mock';
 
 describe('[Dataprofiles] components/state-dialog', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDataprofilesStateDialogComponent;
     let fixture: ComponentFixture<IqsDataprofilesStateDialogComponent>;
     let dataprofiles: DataProfile;
 
     beforeEach(async(() => {
-        dataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(organization_id));
+        dataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(org_id));
     }));
 
     it('should create and disable form', async(() => {
@@ -130,13 +130,13 @@ describe('[Dataprofiles] components/state-dialog', () => {
 
 describe('[Dataprofiles] components/state-dialog', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDataprofilesStateDialogComponent;
     let fixture: ComponentFixture<IqsDataprofilesStateDialogComponent>;
     let dataprofiles: DataProfile;
 
     beforeEach(async(() => {
-        dataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(organization_id));
+        dataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(org_id));
         TestBed.configureTestingModule({
             imports: [
                 NoopAnimationsModule,

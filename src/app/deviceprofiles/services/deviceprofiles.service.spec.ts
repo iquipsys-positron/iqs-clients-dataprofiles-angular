@@ -25,7 +25,7 @@ import { DeviceProfile, BaseDeviceProfile, DeviceprofilesViewState } from '../mo
 
 describe('[Deviceprofiles] services/deviceprofiles', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let service: IqsDeviceprofilesService;
     let store: MockStore<DeviceprofilesState>;
 
@@ -61,7 +61,7 @@ describe('[Deviceprofiles] services/deviceprofiles', () => {
         const dataprofilesService: IqsDataprofilesServiceMock = TestBed.get(IqsDataprofilesService);
         const dispatchSpy = spyOn(store, 'dispatch');
         service.init();
-        dataprofilesService.init({ organization_id });
+        dataprofilesService.init({ org_id });
         expect(IqsDeviceprofilesService.dpUpdateSub).toBeTruthy();
         expect(dispatchSpy).toHaveBeenCalledWith(new DeviceprofilesInitAction());
         const organizationsServiceInitSpy = spyOn(organizationsSerivce, 'init');
@@ -70,7 +70,7 @@ describe('[Deviceprofiles] services/deviceprofiles', () => {
     });
 
     it('should return deviceprofiles$', () => {
-        const deviceprofiles = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id));
+        const deviceprofiles = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id));
         store.setState({
             ...deviceprofilesInitialState,
             profiles: deviceprofiles
@@ -102,7 +102,7 @@ describe('[Deviceprofiles] services/deviceprofiles', () => {
     });
 
     it('should return selectedIndex$ and selectedProfile$', () => {
-        const deviceprofiles: DeviceProfile[] = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id));
+        const deviceprofiles: DeviceProfile[] = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id));
         store.setState({
             ...deviceprofilesInitialState,
             profiles: deviceprofiles
@@ -180,7 +180,7 @@ describe('[Deviceprofiles] services/deviceprofiles', () => {
     });
 
     it('should select deviceprofiles', () => {
-        const deviceprofiles: DeviceProfile[] = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id));
+        const deviceprofiles: DeviceProfile[] = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id));
         store.setState({
             ...deviceprofilesInitialState,
             profiles: deviceprofiles
@@ -225,7 +225,7 @@ describe('[Deviceprofiles] services/deviceprofiles', () => {
     });
 
     it('should call create/update/delete actions', () => {
-        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id)[0]);
+        const deviceprofile: DeviceProfile = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id)[0]);
         const dispatchSpy = spyOn(store, 'dispatch');
         service.create(deviceprofile);
         expect(dispatchSpy).toHaveBeenCalledWith(new DeviceprofilesCreateAction({ profile: deviceprofile }));
@@ -236,7 +236,7 @@ describe('[Deviceprofiles] services/deviceprofiles', () => {
     });
 
     it('should reset deviceprofile', () => {
-        const deviceprofiles: DeviceProfile[] = cloneDeep(utils.deviceprofiles.findByOrganizationId(organization_id));
+        const deviceprofiles: DeviceProfile[] = cloneDeep(utils.deviceprofiles.findByOrganizationId(org_id));
         const baseDeviceprofiles: BaseDeviceProfile[] = cloneDeep(utils.deviceprofiles.getBaseDeviceProfiles());
         const ridx = random(deviceprofiles.length - 1);
         const rBase = baseDeviceprofiles.find(bdp => bdp.id === deviceprofiles[ridx].base_profile_id);

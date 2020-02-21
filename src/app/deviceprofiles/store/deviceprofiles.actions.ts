@@ -55,7 +55,7 @@ export class DeviceprofilesSelectAction implements Action {
     readonly type = DeviceprofilesActionType.DeviceprofilesSelect;
 
     constructor(public payload: {
-        idx: number,
+        // idx: number,
         id: string,
         // state?: DeviceprofilesViewState
     }) { }

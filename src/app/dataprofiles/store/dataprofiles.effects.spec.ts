@@ -11,7 +11,7 @@ import { utils, IqsDataprofilesDataServiceMock } from '../../../mock';
 
 describe('[Dataprofiles] store/effects', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     const error = 'custom error';
     let effects: IqsDataprofilesEffects;
     let actions: Observable<any>;
@@ -33,11 +33,11 @@ describe('[Dataprofiles] store/effects', () => {
         effects = TestBed.get(IqsDataprofilesEffects);
         resetToCurrentDefault();
         const ds: IqsDataprofilesDataServiceMock = TestBed.get(IqsDataprofilesDataService);
-        ds.init({ organization_id, error });
+        ds.init({ org_id, error });
     });
 
     it('dataprofiles$', () => {
-        const expectedDataprofiles = utils.dataprofiles.findByOrganizationId(organization_id);
+        const expectedDataprofiles = utils.dataprofiles.findByOrganizationId(org_id);
         const ds: IqsDataprofilesDataServiceMock = TestBed.get(IqsDataprofilesDataService);
         const action = new fromDataprofilesActions.DataprofilesInitAction();
         const completion = new fromDataprofilesActions.DataprofilesSuccessAction({ dataprofiles: expectedDataprofiles });
@@ -55,7 +55,7 @@ describe('[Dataprofiles] store/effects', () => {
     });
 
     it('dataprofilesUpdate$', () => {
-        const expectedDataprofiles = utils.dataprofiles.findByOrganizationId(organization_id);
+        const expectedDataprofiles = utils.dataprofiles.findByOrganizationId(org_id);
         const ds: IqsDataprofilesDataServiceMock = TestBed.get(IqsDataprofilesDataService);
         const action = new fromDataprofilesActions.DataprofilesUpdateAction({ dataprofiles: expectedDataprofiles });
         const completion = new fromDataprofilesActions.DataprofilesUpdateSuccessAction({ dataprofiles: expectedDataprofiles });

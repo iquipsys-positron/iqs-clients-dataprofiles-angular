@@ -13,7 +13,7 @@ import { utils, IqsDeviceprofilesDataServiceMock } from '../../../mock';
 
 describe('[Deviceprofiles] store/effects', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     const error = 'custom error';
     let effects: IqsDeviceprofilesEffects;
     let actions: Observable<any>;
@@ -38,12 +38,12 @@ describe('[Deviceprofiles] store/effects', () => {
         effects = TestBed.get(IqsDeviceprofilesEffects);
         resetToCurrentDefault();
         const ds: IqsDeviceprofilesDataServiceMock = TestBed.get(IqsDeviceprofilesDataService);
-        ds.init({ organization_id, error });
+        ds.init({ org_id, error });
     });
 
     it('deviceprofiles$', () => {
         const expectedBaseDeviceprofiles = utils.deviceprofiles.getBaseDeviceProfiles();
-        const expectedDeviceprofiles = utils.deviceprofiles.findByOrganizationId(organization_id);
+        const expectedDeviceprofiles = utils.deviceprofiles.findByOrganizationId(org_id);
         const ds: IqsDeviceprofilesDataServiceMock = TestBed.get(IqsDeviceprofilesDataService);
         const action = new fromDeviceprofilesActions.DeviceprofilesInitAction();
         const completion = new fromDeviceprofilesActions.DeviceprofilesSuccessAction({
@@ -66,7 +66,7 @@ describe('[Deviceprofiles] store/effects', () => {
     it('deviceprofilesSuccess$', () => {
         // without query params
         const expectedBaseDeviceprofiles = utils.deviceprofiles.getBaseDeviceProfiles();
-        const expectedDeviceprofiles = utils.deviceprofiles.findByOrganizationId(organization_id);
+        const expectedDeviceprofiles = utils.deviceprofiles.findByOrganizationId(org_id);
         let action = new fromDeviceprofilesActions.DeviceprofilesSuccessAction({
             base: expectedBaseDeviceprofiles,
             profiles: expectedDeviceprofiles
@@ -110,7 +110,7 @@ describe('[Deviceprofiles] store/effects', () => {
     });
 
     it('deviceprofileCreate$', () => {
-        const profile = utils.deviceprofiles.findByOrganizationId(organization_id)[0];
+        const profile = utils.deviceprofiles.findByOrganizationId(org_id)[0];
         const ds: IqsDeviceprofilesDataServiceMock = TestBed.get(IqsDeviceprofilesDataService);
         const action = new fromDeviceprofilesActions.DeviceprofilesCreateAction({ profile });
         const completion = new fromDeviceprofilesActions.DeviceprofilesCreateSuccessAction({ profile });
@@ -128,7 +128,7 @@ describe('[Deviceprofiles] store/effects', () => {
     });
 
     it('deviceprofileUpdate$', () => {
-        const profile = utils.deviceprofiles.findByOrganizationId(organization_id)[0];
+        const profile = utils.deviceprofiles.findByOrganizationId(org_id)[0];
         const ds: IqsDeviceprofilesDataServiceMock = TestBed.get(IqsDeviceprofilesDataService);
         const action = new fromDeviceprofilesActions.DeviceprofilesUpdateAction({ id: profile.id, profile });
         const completion = new fromDeviceprofilesActions.DeviceprofilesUpdateSuccessAction({ id: profile.id, profile });
@@ -146,7 +146,7 @@ describe('[Deviceprofiles] store/effects', () => {
     });
 
     it('deviceprofileDelete$', () => {
-        const profile = utils.deviceprofiles.findByOrganizationId(organization_id)[0];
+        const profile = utils.deviceprofiles.findByOrganizationId(org_id)[0];
         const ds: IqsDeviceprofilesDataServiceMock = TestBed.get(IqsDeviceprofilesDataService);
         const action = new fromDeviceprofilesActions.DeviceprofilesDeleteAction({ id: profile.id });
         const completion = new fromDeviceprofilesActions.DeviceprofilesDeleteSuccessAction({ id: profile.id });
@@ -167,7 +167,7 @@ describe('[Deviceprofiles] store/effects', () => {
 
 describe('[Deviceprofiles] store/effects', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     const error = 'custom error';
     let effects: IqsDeviceprofilesEffects;
     let actions: Observable<any>;
@@ -192,10 +192,10 @@ describe('[Deviceprofiles] store/effects', () => {
         effects = TestBed.get(IqsDeviceprofilesEffects);
         resetToCurrentDefault();
         const ds: IqsDeviceprofilesDataServiceMock = TestBed.get(IqsDeviceprofilesDataService);
-        ds.init({ organization_id, error });
+        ds.init({ org_id, error });
         // with query params
         const expectedBaseDeviceprofiles = utils.deviceprofiles.getBaseDeviceProfiles();
-        const expectedDeviceprofiles = utils.deviceprofiles.findByOrganizationId(organization_id);
+        const expectedDeviceprofiles = utils.deviceprofiles.findByOrganizationId(org_id);
         const action = new fromDeviceprofilesActions.DeviceprofilesSuccessAction({
             base: expectedBaseDeviceprofiles,
             profiles: expectedDeviceprofiles

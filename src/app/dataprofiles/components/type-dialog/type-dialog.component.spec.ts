@@ -21,13 +21,13 @@ import { utils } from '../../../../mock';
 
 describe('[Dataprofiles] components/type-dialog', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDataprofilesTypeDialogComponent;
     let fixture: ComponentFixture<IqsDataprofilesTypeDialogComponent>;
     let dataprofiles: DataProfile;
 
     beforeEach(async(() => {
-        dataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(organization_id));
+        dataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(org_id));
         TestBed.configureTestingModule({
             imports: [
                 BrowserAnimationsModule,
@@ -133,13 +133,13 @@ describe('[Dataprofiles] components/type-dialog', () => {
 
 describe('[Dataprofiles] components/type-dialog', () => {
 
-    const organization_id = '00000000000000000000000000000000';
+    const org_id = '00000000000000000000000000000000';
     let component: IqsDataprofilesTypeDialogComponent;
     let fixture: ComponentFixture<IqsDataprofilesTypeDialogComponent>;
     let dataprofiles: DataProfile;
 
     beforeEach(async(() => {
-        dataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(organization_id));
+        dataprofiles = cloneDeep(utils.dataprofiles.findByOrganizationId(org_id));
         TestBed.configureTestingModule({
             imports: [
                 BrowserAnimationsModule,

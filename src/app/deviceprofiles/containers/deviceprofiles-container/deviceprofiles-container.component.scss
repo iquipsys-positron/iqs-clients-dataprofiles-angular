@@ -3,6 +3,27 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+
+    pip-scrollable-content {
+        flex: 1;
+        display: flex;
+
+        pip-empty-state {
+            flex: 1;
+            height: auto;
+
+            ::ng-deep div {
+                width: 100%;
+                height: 100%;
+
+                &>.iqs-menu-empty {
+                    width: 100%;
+                    height: 100%;
+                    background-image: url(/assets/menu-empty.svg);
+                }
+            }
+        }
+    }
 }
 
 .pip-fab {

@@ -40,6 +40,8 @@
             "styles": [
               "node_modules/pip-webui2-themes/styles.scss",
               "node_modules/pip-webui2-layouts/styles.scss",
+              "node_modules/iqs-libs-clientshell2-angular/assets/fonts/pip-webui/pip-webui.css",
+              "node_modules/iqs-libs-clientshell2-angular/assets/fonts/iquipsys-tracker/iquipsys-tracker.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -140,9 +142,11 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.scss",
               "node_modules/pip-webui2-themes/styles.scss",
-              "node_modules/pip-webui2-layouts/styles.scss"
+              "node_modules/pip-webui2-layouts/styles.scss",
+              "node_modules/iqs-libs-clientshell2-angular/assets/fonts/pip-webui/pip-webui.css",
+              "node_modules/iqs-libs-clientshell2-angular/assets/fonts/iquipsys-tracker/iquipsys-tracker.css",
+              "src/styles.scss"
             ],
             "scripts": [],
             "assets": [

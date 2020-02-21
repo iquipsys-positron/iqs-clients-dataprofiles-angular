@@ -10,7 +10,7 @@ import { DataProfile } from '../models';
 })
 export class IqsDataprofilesDataService extends CommonDataService {
 
-    private RESOURCE = '/api/v1/organizations/:organization_id/data_profiles';
+    private RESOURCE = '/api/v1/organizations/:org_id/data_profiles';
 
     constructor(
         private sessionConfig: IqsSessionConfigService,
@@ -20,7 +20,7 @@ export class IqsDataprofilesDataService extends CommonDataService {
 
     public readDataprofiles(): Observable<DataProfile> {
         const params = {
-            organization_id: this.organizationsService.current && this.organizationsService.current.id
+            org_id: this.organizationsService.current && this.organizationsService.current.id
         };
 
         return this.http.get<DataProfile>(this.buildUrl(this.sessionConfig.serverUrl + this.RESOURCE, params));
@@ -28,9 +28,9 @@ export class IqsDataprofilesDataService extends CommonDataService {
 
     public updateDataprofiles(data: DataProfile): Observable<DataProfile> {
         const params = {
-            organization_id: this.organizationsService.current && this.organizationsService.current.id
+            org_id: this.organizationsService.current && this.organizationsService.current.id
         };
-        if (!data.id) { data.id = params.organization_id; }
+        if (!data.id) { data.id = params.org_id; }
 
         return this.http.post<DataProfile>(this.buildUrl(this.sessionConfig.serverUrl + this.RESOURCE, params), data);
     }

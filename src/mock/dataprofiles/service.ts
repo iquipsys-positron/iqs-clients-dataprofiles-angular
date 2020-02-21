@@ -19,7 +19,7 @@ export class IqsDataprofilesServiceMock {
     private _dataprofiles$: BehaviorSubject<DataProfile>;
     private _state$: BehaviorSubject<EntityState>;
     private _error$: BehaviorSubject<any>;
-    private organization_id: string;
+    private org_id: string;
 
     constructor() {
         this._dataprofiles$ = new BehaviorSubject(null);
@@ -28,10 +28,10 @@ export class IqsDataprofilesServiceMock {
     }
 
     public init(payload?: {
-        organization_id: string
+        org_id: string
     }): void {
-        this.organization_id = payload && payload.organization_id || '00000000000000000000000000000000';
-        this._dataprofiles$.next(utils.dataprofiles.findByOrganizationId(this.organization_id));
+        this.org_id = payload && payload.org_id || '00000000000000000000000000000000';
+        this._dataprofiles$.next(utils.dataprofiles.findByOrganizationId(this.org_id));
         this.state = EntityState.Data;
     }
 
@@ -72,7 +72,7 @@ export class IqsDataprofilesServiceMock {
     }
 
     public update(data: DataProfile): void {
-        utils.dataprofiles.updateByOrganizationId(this.organization_id, data);
+        utils.dataprofiles.updateByOrganizationId(this.org_id, data);
     }
 
     public getTypeById(type: DataProfileType, id: number): ActuatorCommandType | SensorEventType | SensorParameterType | SensorStateType {

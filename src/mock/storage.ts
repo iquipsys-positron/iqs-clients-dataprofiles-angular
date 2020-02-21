@@ -362,7 +362,7 @@ const deviceprofilesDefault: DeviceProfile[] = [
             'rest',
             'mqtt'
         ],
-        organization_id: '00000000000000000000000000000000',
+        org_id: '00000000000000000000000000000000',
         events: [
             {
                 max_value: 1,
@@ -390,7 +390,7 @@ const deviceprofilesDefault: DeviceProfile[] = [
         gateways: [
             'rest'
         ],
-        organization_id: '00000000000000000000000000000000',
+        org_id: '00000000000000000000000000000000',
         events: [],
         id: '00000000000000000000000000000001',
         base_profile_id: 'iqx'
@@ -417,7 +417,7 @@ const deviceprofilesDefault: DeviceProfile[] = [
             'mqtt',
             'lora'
         ],
-        organization_id: '00000000000000000000000000000000',
+        org_id: '00000000000000000000000000000000',
         events: [
             {
                 offset: 2,
@@ -461,7 +461,7 @@ const deviceprofilesDefault: DeviceProfile[] = [
         gateways: [
             'mqtt'
         ],
-        organization_id: '00000000000000000000000000000000',
+        org_id: '00000000000000000000000000000000',
         events: [
             {
                 id: 1,

@@ -7,7 +7,7 @@ import { DeviceprofilesViewState, DeviceProfile } from '../models';
 export const deviceprofilesInitialState: DeviceprofilesState = {
     base: [],
     profiles: [],
-    selectedIndex: null,
+    selectedId: null,
     state: DeviceprofilesViewState.Progress,
     isSingle: false,
     loading: false,
@@ -52,7 +52,7 @@ export function deviceprofilesReducer(
 
         case DeviceprofilesActionType.DeviceprofilesSelect: {
             let map = fromJS(state);
-            map = map.set('selectedIndex', action.payload.idx);
+            map = map.set('selectedId', action.payload.id);
             return <DeviceprofilesState>map.toJS();
         }
 
@@ -73,6 +73,7 @@ export function deviceprofilesReducer(
             let map = fromJS(state);
             const profiles: DeviceProfile[] = map.get('profiles').toJS();
             profiles.push(action.payload.profile);
+            map = map.set('selectedId', action.payload.profile.id);
             map = map.set('profiles', profiles);
             map = map.set('loading', false);
             map = map.set('error', null);
@@ -128,7 +129,7 @@ export function deviceprofilesReducer(
                 profiles.splice(idx, 1);
             }
             if (profiles.length > 0) {
-                map = map.set('selectedIndex', idx === 0 ? idx : idx - 1);
+                map = map.set('selectedId', profiles[idx > profiles.length - 1 ? profiles.length - 1 : idx].id);
                 map = map.set('state', DeviceprofilesViewState.View);
             } else {
                 map = map.set('state', DeviceprofilesViewState.Empty);
